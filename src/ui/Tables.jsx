@@ -22,7 +22,7 @@ export default function Tables({ show = 'total', data, isLoading }) {
         </tr>
       </thead>
       <tbody>
-        {data.map(entry => {
+        {data?.map(entry => {
           return (
             <tr key={entry.id}>
               <td className="border border-slate-700 ...">

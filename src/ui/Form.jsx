@@ -1,13 +1,26 @@
 import { useForm } from 'react-hook-form';
 import { useAddFinanceData } from './../features/financeData/useAddFinanceData';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FinanceContext } from '../pages/Dashboard';
 import { useEditFinanceData } from '../features/financeData/useEditFinanceData';
+import supabase from '../services/supabase';
 
 export default function Form() {
   const { formType, isEditForm, editFormData } = useContext(FinanceContext);
+  //const { user, isloading } = useContext(AuthContext);
   const { isAdding, addFianance } = useAddFinanceData();
   const { isEditing, editFianance } = useEditFinanceData();
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    async function setData() {
+      const { data: session } = await supabase.auth.getSession();
+      if (!session?.session?.user) return null;
+      setUser(session?.session?.user);
+    }
+    setData();
+  }, []);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditForm ? editFormData : {},
@@ -40,6 +53,7 @@ export default function Form() {
             ...data,
             created_at: new Date(data.created_at),
             isIncome: formType === 'Income' ? true : false,
+            user: user.id,
           },
         },
         {
