@@ -1,3 +1,4 @@
+import { Navigate, useNavigate } from 'react-router-dom';
 import supabase, { supabaseUrl } from './supabase';
 
 export async function signupUser({ fullName, email, password }) {
@@ -28,12 +29,11 @@ export async function loginUser({ email, password }) {
 }
 
 export async function getCurrentUser() {
-  debugger;
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return null;
 
   const { data, error } = await supabase.auth.getUser();
-
+  console.log(data.user);
   if (error) throw new Error(error.message);
   return data?.user;
 }

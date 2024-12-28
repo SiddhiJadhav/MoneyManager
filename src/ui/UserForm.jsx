@@ -1,9 +1,12 @@
 import { useForm } from 'react-hook-form';
-import { useContext } from 'react';
 import { useLoginUSer } from '../features/authentication/useLoginUser';
 import { useSignupUser } from '../features/authentication/useSignupUser';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import Input from './Input';
+import FormLayout from './FormLayout';
+import Button from './Button';
+import AnchorTag from './AnchorTag';
 
 export default function UserForm({ formType }) {
   const navigate = useNavigate();
@@ -37,13 +40,8 @@ export default function UserForm({ formType }) {
           ...data,
         },
         {
-          onSuccess: response => {
-            debugger;
-            console.log(response);
-            toast.success('Login Successful');
+          onSettled: () => {
             reset();
-            navigate('/dashboard', { replace: true });
-            // onCloseModal?.();
           },
         }
       );
@@ -55,49 +53,53 @@ export default function UserForm({ formType }) {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+    <div className="bg-slate-200 w-1/3 h-full py-10 gap-5 flex flex-col items-center m-auto my-16 rounded-xl shadow-xl shadow-slate-300">
+      <div className="text-4xl font-bold text-slate-700">
+        {formType == 'login' ? 'Login' : 'Sign Up'}
+      </div>
+      <FormLayout
+        onSubmit={handleSubmit(onSubmit, onError)}
+        classes="flex flex-col gap-3 w-2/3"
+      >
         {formType == 'signup' && (
           <>
-            <label htmlFor="user_name">User Name</label>
-            <input
-              type="text"
+            <Input
               id="user_name"
-              disabled={isLogging}
-              {...register('user_name', {
-                required: 'This field is required',
-              })}
+              label="User name"
+              type="text"
+              isLoading={isLogging}
+              errors={errors.user_name}
+              register={register}
             />
-            <p>{errors?.user_name?.message}</p>
           </>
         )}
 
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
+        <Input
           id="email"
-          disabled={isLogging}
-          {...register('email', {
-            required: 'This field is required',
-          })}
+          label="Email"
+          type="email"
+          isLoading={isLogging}
+          errors={errors.email}
+          register={register}
         />
-        <p>{errors?.email?.message}</p>
-
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
+        <Input
           id="password"
-          disabled={isLogging}
-          {...register('password', {
-            required: 'This field is required',
-          })}
+          label="Password"
+          type="password"
+          isLoading={isLogging}
+          errors={errors.password}
+          register={register}
         />
-        <p>{errors?.password?.message}</p>
-
-        <button disabled={isLogging}>
-          {formType == 'login' ? 'Login' : 'SignUp'}
-        </button>
-      </form>
+        <Button formType={formType} isLoading={isLogging} />
+        <AnchorTag
+          href={formType == 'signup' ? '/login' : '/signup'}
+          text={
+            formType == 'signup'
+              ? 'Already have an account ? Log In'
+              : 'Don’t have an account ? Sign up for one now'
+          }
+        />
+      </FormLayout>
     </div>
   );
 }

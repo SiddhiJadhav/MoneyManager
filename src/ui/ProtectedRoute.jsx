@@ -1,11 +1,9 @@
+import { useEffect } from 'react';
 import { useUser } from '../features/authentication/useUser';
 import Spinner from './Spinner';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
-import AuthProvider from '../features/authentication/AuthProvider';
 
 function ProtectedRoute({ children }) {
-  debugger;
   const navigate = useNavigate();
 
   // 1. Load the authenticated user

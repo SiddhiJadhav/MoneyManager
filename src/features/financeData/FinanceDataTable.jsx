@@ -5,5 +5,9 @@ import { FinanceContext } from '../../pages/Dashboard';
 export default function FinanceDataTable() {
   const { isLoading, error, finance } = useContext(FinanceContext);
 
-  return <Tables show="total" data={finance} isLoading={isLoading} />;
+  return (
+    <div className="bg-white rounded-xl shadow-2xl ">
+      <Tables show="total" data={finance} isLoading={isLoading} />
+    </div>
+  );
 }

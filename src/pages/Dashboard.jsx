@@ -12,12 +12,10 @@ export default function Dashboard() {
   const [formType, setFormtype] = useState('Income');
   const [isEditForm, setisEditForm] = useState(false);
   const [editFormData, setEditFormData] = useState({});
-  debugger;
 
   const { isLoading, error, finance } = useFinance();
 
   if (isLoading) return <Spinner />;
-  debugger;
   return (
     <FinanceContext.Provider
       value={{
@@ -32,19 +30,16 @@ export default function Dashboard() {
         editFormData,
         setEditFormData,
       }}
+      className="static"
     >
-      {showForm && (
-        <div>
-          <CreateFinance />
-        </div>
-      )}
+      {showForm && <CreateFinance />}
 
-      <div className="flex justify-evenly align-middle">
-        <Card type={'Income'} />
-        <Card type={'Expence'} />
-        <Card type={'Total'} />
+      <div className="flex justify-evenly align-middle my-7">
+        <Card type="Income" key="Income" />
+        <Card type="Expence" key="Expence" />
+        <Card type="Total" key="Total" />
       </div>
-      <div className="flex justify-evenly align-middle">
+      <div className="flex justify-center items-center m-20 ">
         <FinanceDataTable />
       </div>
     </FinanceContext.Provider>

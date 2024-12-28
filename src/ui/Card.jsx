@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { FinanceContext } from '../pages/Dashboard';
 import Spinner from './Spinner';
+import Button from './Button';
+import AmountDiv from './AmountDiv';
 
 export default function Card({ type }) {
   const { finance, isLoading, setShowForm, setFormtype } =
@@ -39,26 +41,19 @@ export default function Card({ type }) {
 
   return (
     <>
-      <div className="w-80 max-w-sm p-6 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-2xl">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <div className="w-80 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-2xl flex flex-col">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 uppercase">
           {type}
         </h5>
-        <p className="mb-3 text-5xl font-normal text-gray-700 dark:text-gray-400">
-          {isLoading ? (
-            <Spinner />
-          ) : type == 'Total' ? (
-            displayAmount
-          ) : (
-            `${checkIsIncome ? '+' : '-'}${displayAmount}`
-          )}
-        </p>
+
+        <AmountDiv
+          isLoading={isLoading}
+          type={type}
+          displayAmount={displayAmount}
+          checkIsIncome={checkIsIncome}
+        />
         {type != 'Total' && (
-          <button
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onClick={() => handleClick()}
-          >
-            {`Add ${type}`}
-          </button>
+          <Button text={`Add ${type}`} onClick={() => handleClick()} />
         )}
       </div>
     </>

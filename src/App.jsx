@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import AuthProvider from './features/authentication/AuthProvider';
 import ProtectedRoute from './ui/ProtectedRoute';
 import ProtectedRouteLogin from './ui/ProtectedRouteLogin';
+import { Toaster } from 'react-hot-toast';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,8 +25,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
+      {/* <AuthProvider> */}
       <BrowserRouter>
-        {/* <AuthProvider> */}
         <Routes>
           <Route
             element={
@@ -49,8 +50,29 @@ function App() {
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-        {/* </AuthProvider> */}
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: '15px' }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            style: {
+              fontSize: '16px',
+              maxWidth: '500px',
+              padding: '16px 24px',
+              backgroundColor: 'white',
+              color: 'black',
+              fontWeight: 'bold',
+            },
+          }}
+        />{' '}
       </BrowserRouter>
+      {/* </AuthProvider> */}
     </QueryClientProvider>
   );
 }

@@ -1,6 +1,3 @@
-import { useContext } from 'react';
-import { useUser } from '../features/authentication/useUser';
-import { getCurrentUser } from './apiAuth';
 import supabase from './supabase';
 
 export async function getfinance() {
@@ -47,6 +44,12 @@ export async function editFinance(editEntry) {
     console.error(error);
     throw new Error('Data not found');
   }
+}
+export async function deleteFinance(id) {
+  const { error } = await supabase.from('financeData').delete().eq('id', id);
 
-  return data;
+  if (error) {
+    console.error(error);
+    throw new Error('Data not found');
+  }
 }

@@ -4,9 +4,14 @@ import { useContext, useEffect, useState } from 'react';
 import { FinanceContext } from '../pages/Dashboard';
 import { useEditFinanceData } from '../features/financeData/useEditFinanceData';
 import supabase from '../services/supabase';
+import FormLayout from './FormLayout';
+import Input from './Input';
+import Button from './Button';
+import { useDeleteFinanceData } from '../features/financeData/useDeleteFinance';
 
 export default function Form() {
-  const { formType, isEditForm, editFormData } = useContext(FinanceContext);
+  const { formType, isEditForm, editFormData, setShowForm } =
+    useContext(FinanceContext);
   //const { user, isloading } = useContext(AuthContext);
   const { isAdding, addFianance } = useAddFinanceData();
   const { isEditing, editFianance } = useEditFinanceData();
@@ -28,6 +33,7 @@ export default function Form() {
   const { errors } = formState;
 
   function onSubmit(data) {
+    debugger;
     if (isEditForm) {
       editFianance(
         {
@@ -42,7 +48,7 @@ export default function Form() {
             console.log(response);
 
             reset();
-            // onCloseModal?.();
+            setShowForm(false);
           },
         }
       );
@@ -61,7 +67,7 @@ export default function Form() {
             console.log(response);
 
             reset();
-            // onCloseModal?.();
+            setShowForm(false);
           },
         }
       );
@@ -72,93 +78,90 @@ export default function Form() {
     // console.log(errors);
   }
 
+  function handleCloseModal(e) {
+    if (e.target.id == 'modal') setShowForm(false);
+  }
+
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <label htmlFor="created_at">Date</label>
-        <input
-          type="Date"
-          id="created_at"
-          disabled={isAdding}
-          {...register('created_at', {
-            required: 'This field is required',
-          })}
-        />
-        <p>{errors?.amount?.message}</p>
-
-        <label htmlFor="account">Account</label>
-        <select
-          id="account"
-          disabled={isAdding}
-          {...register('account', {
-            required: 'This field is required',
-          })}
+    <div
+      className="z-50 bg-slate-500/50 tran w-full h-full max-h-full absolute"
+      id="modal"
+      onClick={e => handleCloseModal(e)}
+    >
+      <div className="bg-slate-200 w-1/3 py-10  gap-5 flex flex-col items-center m-auto my-16 rounded-xl">
+        <div className="text-4xl font-bold text-slate-700">
+          {formType == 'Income' ? 'INCOME' : 'EXPENCE'}
+        </div>
+        <FormLayout
+          onSubmit={handleSubmit(onSubmit, onError)}
+          classes="flex flex-col gap-3 w-2/3"
         >
-          <option value="Cash">Cash</option>
-          <option value="Account">Account</option>
-          <option value="Card">Card</option>
-        </select>
-        <p>{errors?.account?.message}</p>
+          <Input
+            id="created_at"
+            label="Date"
+            type="Date"
+            isLoading={isAdding}
+            errors={errors.created_at}
+            register={register}
+          />
 
-        <label htmlFor="amount">Amount</label>
-        <input
-          type="number"
-          id="amount"
-          disabled={isAdding}
-          {...register('amount', {
-            required: 'This field is required',
-            min: {
-              value: 1,
-              message: 'Amount should be greater than 1',
-            },
-          })}
-        />
-        <p>{errors?.amount?.message}</p>
+          <Input
+            id="account"
+            label="Account"
+            type="select"
+            isLoading={isAdding}
+            errors={errors.account}
+            register={register}
+            options={['Cash', 'Account', 'Card']}
+          />
 
-        <label htmlFor="category">Category</label>
-        <select
-          id="category"
-          disabled={isAdding}
-          {...register('category', {
-            required: 'This field is required',
-          })}
-        >
-          <option value="Food">Food</option>
-          <option value="Social Life">Social Life</option>
-          <option value="Transportation">Transportation</option>
-          <option value="Household">Household</option>
-          <option value="Health">Health</option>
-          <option value="Apparel">Apparel</option>
-          <option value="Culture">Culture</option>
-          <option value="Gift">Gift</option>
-        </select>
-        <p>{errors?.category?.message}</p>
+          <Input
+            id="amount"
+            label="Amount"
+            type="text"
+            isLoading={isAdding}
+            errors={errors.amount}
+            register={register}
+          />
 
-        <label htmlFor="description">Description</label>
-        <input
-          type="text"
-          id="description"
-          disabled={isAdding}
-          {...register('description', {
-            required: 'This field is required',
-            min: {
-              value: 1,
-              message: 'description should be greater than 1',
-            },
-          })}
-        />
-        <p>{errors?.description?.message}</p>
+          <Input
+            id="category"
+            label="Category"
+            type="select"
+            isLoading={isAdding}
+            errors={errors.category}
+            register={register}
+            options={
+              formType == 'Income'
+                ? ['Allowance', 'Salary', 'Bonus', 'Other']
+                : [
+                    'Food',
+                    'Social Life',
+                    'Transportation',
+                    'Household',
+                    'Health',
+                    'Apparel',
+                    'Culture',
+                    'Gift',
+                  ]
+            }
+          />
 
-        <button
-          type="reset"
-          // onClick={() => onCloseModal?.()}
-        >
-          Cancel
-        </button>
-        <button disabled={isAdding}>
-          {formType === 'Income' ? 'Add Income' : 'Add Expence'}
-        </button>
-      </form>
+          <Input
+            id="description"
+            label="Description"
+            type="text"
+            isLoading={isAdding}
+            errors={errors.description}
+            register={register}
+          />
+          <Button
+            text={formType === 'Income' ? 'Add Income' : 'Add Expence'}
+            isLoading={isAdding}
+          />
+        </FormLayout>
+        {/* </form> */}
+      </div>
     </div>
   );
 }
