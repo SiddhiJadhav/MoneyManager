@@ -5,7 +5,7 @@ export default function AmountDiv({ isLoading, displayAmount, type }) {
   if (type) {
     if (type == 'Income') {
       amountColor = 'bg-green-300';
-    } else if (type == 'Expence') {
+    } else if (type == 'Expense') {
       amountColor = 'bg-red-300';
     }
   }

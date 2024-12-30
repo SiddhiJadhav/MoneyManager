@@ -57,7 +57,7 @@ export default function Tables({ show = 'total', data, isLoading }) {
                           .join('-'),
                       });
                       setisEditForm(true);
-                      setFormtype(entry.isIncome ? 'Income' : 'Expence');
+                      setFormtype(entry.isIncome ? 'Income' : 'Expense');
                       setShowForm(true);
                     }}
                   >

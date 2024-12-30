@@ -13,7 +13,7 @@ export default function Card({ type }) {
   let checkIsIncome = true;
   if (type == 'Income') {
     checkIsIncome = true;
-  } else if (type == 'Expence') {
+  } else if (type == 'Expense') {
     checkIsIncome = false;
   }
   if (type == 'Total') {

@@ -1,5 +1,9 @@
+import DatePicker from 'react-datepicker';
+
 export default function Input({
   id,
+  value,
+  onChange,
   isLoading,
   errors,
   register,
@@ -14,17 +18,20 @@ export default function Input({
         <label htmlFor={id} className="text-lg font-semibold text-slate-700">
           {label}
         </label>
-        {type != 'select' ? (
+        {type == 'text' && (
           <input
             type={type}
             id={id}
+            value={value}
+            onChange={onChange}
             disabled={isLoading}
             {...register(id, {
               required: 'This field is required',
             })}
             className="border py-2 px-3 text-grey-darkest rounded-lg"
           />
-        ) : (
+        )}
+        {type == 'select' && (
           <select
             id={id}
             disabled={isLoading}
@@ -42,6 +49,7 @@ export default function Input({
             })}
           </select>
         )}
+
         <p>{errors?.message}</p>
       </div>
     </>

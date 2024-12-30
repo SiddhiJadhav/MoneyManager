@@ -156,7 +156,7 @@ export default function Form() {
             register={register}
           />
           <Button
-            text={formType === 'Income' ? 'Add Income' : 'Add Expence'}
+            text={formType === 'Income' ? 'Add Income' : 'Add Expense'}
             isLoading={isAdding}
           />
         </FormLayout>

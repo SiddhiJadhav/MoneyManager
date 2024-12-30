@@ -11,6 +11,7 @@ import AuthProvider from './features/authentication/AuthProvider';
 import ProtectedRoute from './ui/ProtectedRoute';
 import ProtectedRouteLogin from './ui/ProtectedRouteLogin';
 import { Toaster } from 'react-hot-toast';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {

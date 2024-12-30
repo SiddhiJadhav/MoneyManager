@@ -36,7 +36,7 @@ export default function Dashboard() {
 
       <div className="flex justify-evenly align-middle my-7">
         <Card type="Income" key="Income" />
-        <Card type="Expence" key="Expence" />
+        <Card type="Expense" key="Expense" />
         <Card type="Total" key="Total" />
       </div>
       <div className="flex justify-center items-center m-20 ">
