@@ -1,4 +1,4 @@
-import UserForm from '../ui/userForm';
+import UserForm from '../ui/UserForm';
 
 export default function Signup() {
   return (
