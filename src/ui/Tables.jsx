@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 import getDate from '../utils/Date';
 import Spinner from './Spinner';
-import { MdEdit, MdDelete } from 'react-icons/md';
+import { MdEdit, MdDelete, MdOutlineCreditCardOff } from 'react-icons/md';
 import { FinanceContext } from '../pages/Dashboard';
 import THeadComponent from './THeadComponent';
 import TrowComponent from './TrowComponent';
@@ -22,6 +22,15 @@ export default function Tables({ show = 'total', data, isLoading }) {
   }
 
   if (isLoading) return <Spinner />;
+  if (data.length == 0)
+    return (
+      <div className="flex flex-col justify-around items-center">
+        <MdOutlineCreditCardOff className="h-64 w-64 m-4 text-slate-800" />
+        <p className=" mb-8 text-4xl font-semibold text-slate-800">
+          No data available
+        </p>
+      </div>
+    );
   return (
     <table className="border-8 border-white border-separate border-spacing-1 rounded-lg">
       <THeadComponent>

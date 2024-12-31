@@ -31,7 +31,7 @@ export default function FinanceDataTable() {
     }
   }, [isApplied]);
   return (
-    <div className="bg-white rounded-xl shadow-2xl ">
+    <div className="bg-white rounded-xl shadow-2xl w-60">
       <FilterComponent
         filterMonth={filterMonth}
         setFilterMonth={setFilterMonth}
