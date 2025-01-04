@@ -5,6 +5,8 @@ export default {
     extend: {
       spacing: {
         60: '60rem',
+        80: '80rem',
+        90: '90rem',
       },
     },
   },

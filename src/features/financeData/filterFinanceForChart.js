@@ -6,7 +6,6 @@ export default function filterFinanceForChart(financeData, filterDate) {
     return new Date(entry.created_at).getFullYear() == filterDate;
   });
 
-  console.log(filterFinanceData);
   let totalIncome = 0;
   const incomeData = filterFinanceData.filter(entry => {
     return entry.isIncome;

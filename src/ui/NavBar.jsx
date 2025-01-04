@@ -19,8 +19,6 @@ export default function NavBar() {
     function () {
       if (isAuthenticated && !isLoading) {
         setIsLoggedIn(true);
-        console.log(user);
-
         getAuthUserName(user?.id);
       }
     },
@@ -38,7 +36,7 @@ export default function NavBar() {
 
   return (
     <header>
-      <nav className="bg-gray-100 top-0 left-0 p-4 drop-shadow-xl text-slate-700">
+      <nav className="bg-gray-100 top-0 left-0 p-4 drop-shadow-xl text-slate-700 fixed w-full z-10 h-16">
         <div className="list-none flex justify-between items-center">
           <div className="flex justify-start items-center gap-3">
             <div className="text-3xl">

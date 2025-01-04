@@ -9,7 +9,6 @@ export default function filterFinance(financeData, filterDate, desc) {
     );
   });
 
-  console.log(filterFinanceData);
   if (desc == '') return filterFinanceData;
 
   const filterFinanceDataWithDesc = filterFinanceData.filter(entry => {

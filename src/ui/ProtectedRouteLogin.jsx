@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function ProtectedRouteLogin({ children }) {
-  debugger;
   const navigate = useNavigate();
 
   // 1. Load the authenticated user

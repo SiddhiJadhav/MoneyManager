@@ -13,7 +13,7 @@ import { useDeleteFinanceData } from '../features/financeData/useDeleteFinance';
 import RoundedBtn from './RoundedBtn';
 
 export default function Tables({ show = 'total', data, isLoading }) {
-  const { setShowForm, setFormtype, setisEditForm, setEditFormData } =
+  const { setShowForm, setFormtype, setisEditForm, setEditFormData, showYear } =
     useContext(FinanceContext);
   const { deleteFianance } = useDeleteFinanceData();
 
@@ -26,9 +26,12 @@ export default function Tables({ show = 'total', data, isLoading }) {
     return (
       <div className="flex flex-col justify-around items-center">
         <MdOutlineCreditCardOff className="h-64 w-64 m-4 text-slate-800" />
-        <p className=" mb-8 text-4xl font-semibold text-slate-800">
-          No data available
-        </p>
+        <span className=" mb-8 text-4xl font-semibold text-slate-800 text-center">
+          <p>No data available</p>
+          {new Date().getFullYear() == showYear && (
+            <p>Start recording your finance now...</p>
+          )}
+        </span>
       </div>
     );
   return (

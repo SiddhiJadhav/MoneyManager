@@ -7,11 +7,12 @@ import Input from './Input';
 import FormLayout from './FormLayout';
 import Button from './Button';
 import AnchorTag from './AnchorTag';
+import Spinner from './Spinner';
 
 export default function UserForm({ formType }) {
   const navigate = useNavigate();
-  const { isLogging, loginUser } = useLoginUSer();
-  const { isSigningup, signupUser } = useSignupUser();
+  const { isLogging: isLoadingLogin, loginUser } = useLoginUSer();
+  const { isSigningup: isLoadingSignup, signupUser } = useSignupUser();
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({});
   const { errors } = formState;
@@ -24,7 +25,6 @@ export default function UserForm({ formType }) {
         },
         {
           onSuccess: response => {
-            console.log(response);
             toast.success(
               'Account created successfully.Kindly login to proceed.'
             );
@@ -52,8 +52,10 @@ export default function UserForm({ formType }) {
     // console.log(errors);
   }
 
+  if (isLoadingLogin || isLoadingSignup) return <Spinner />;
+
   return (
-    <div className="bg-slate-200 w-1/3 h-full py-10 gap-5 flex flex-col items-center m-auto my-16 rounded-xl shadow-xl shadow-slate-300">
+    <div className="mt-32 bg-slate-200 w-1/3 h-full py-10 gap-5 flex flex-col items-center m-auto my-16 rounded-xl shadow-xl shadow-slate-300">
       <div className="text-4xl font-bold text-slate-700">
         {formType == 'login' ? 'Login' : 'Sign Up'}
       </div>
@@ -67,7 +69,7 @@ export default function UserForm({ formType }) {
               id="user_name"
               label="User name"
               type="text"
-              isLoading={isLogging}
+              isLoading={isLoadingLogin || isLoadingSignup}
               errors={errors.user_name}
               register={register}
             />
@@ -78,7 +80,7 @@ export default function UserForm({ formType }) {
           id="email"
           label="Email"
           type="email"
-          isLoading={isLogging}
+          isLoading={isLoadingLogin || isLoadingSignup}
           errors={errors.email}
           register={register}
         />
@@ -86,11 +88,14 @@ export default function UserForm({ formType }) {
           id="password"
           label="Password"
           type="password"
-          isLoading={isLogging}
+          isLoading={isLoadingLogin || isLoadingSignup}
           errors={errors.password}
           register={register}
         />
-        <Button formType={formType} isLoading={isLogging} />
+        <Button
+          formType={formType}
+          isLoading={isLoadingLogin || isLoadingSignup}
+        />
         <AnchorTag
           href={formType == 'signup' ? '/login' : '/signup'}
           text={

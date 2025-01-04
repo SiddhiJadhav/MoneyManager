@@ -4,11 +4,12 @@ import { FinanceContext } from '../pages/Dashboard';
 import DoughnutChart from './DoughnutChart';
 import filterFinanceForChart from '../features/financeData/filterFinanceForChart';
 import DatePicker from 'react-datepicker';
+import Spinner from './Spinner';
+import { MdOutlineCreditCardOff } from 'react-icons/md';
 
 export default function Stats() {
   const { setShowStat, isLoading, finance, showYear, setshowYear } =
     useContext(FinanceContext);
-  debugger;
   const [filterYear, setfilterYear] = useState(new Date().getFullYear());
   const [incomeArray, setIncomeArray] = useState([]);
   const [expenseArray, setExpenseArray] = useState([]);
@@ -18,7 +19,6 @@ export default function Stats() {
   useEffect(() => {
     const [totalIncome, incomeData, totalExpense, expenseData] =
       filterFinanceForChart(finance, filterYear);
-    debugger;
     settotalIncomeAmount(totalIncome);
     settotalExpenseAmount(totalExpense);
     setIncomeArray(incomeData);
@@ -37,6 +37,7 @@ export default function Stats() {
     return <span>{year}</span>;
   };
 
+  if (isLoading) return <Spinner />;
   return (
     <div
       className="z-50 bg-slate-500/50 tran fixed w-full h-full top-0 left-0"
@@ -60,15 +61,26 @@ export default function Stats() {
           />
         </div>
         <div className="m-auto w-full bg-slate-100 flex flex-row items-center my-8 rounded-xl">
-          <div className="basis-3/4 p-10">
-            <BarChart income={incomeArray} expense={expenseArray} />
-          </div>
-          <div className="basis-1/4 p-10">
-            <DoughnutChart
-              income={totalIncomeAmount}
-              expense={totalExpenseAmount}
-            />
-          </div>
+          {totalIncomeAmount == 0 && totalExpenseAmount == 0 ? (
+            <div className="flex flex-col justify-around items-center m-auto">
+              <MdOutlineCreditCardOff className="h-64 w-64 m-4 text-slate-800" />
+              <p className=" mb-8 text-4xl font-semibold text-slate-800">
+                No data available
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="basis-3/4 p-10">
+                <BarChart income={incomeArray} expense={expenseArray} />
+              </div>
+              <div className="basis-1/4 p-10">
+                <DoughnutChart
+                  income={totalIncomeAmount}
+                  expense={totalExpenseAmount}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

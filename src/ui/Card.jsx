@@ -13,8 +13,6 @@ export default function Card({ type }) {
     setShowStat,
     showYear,
   } = useContext(FinanceContext);
-  console.log(finance);
-  debugger;
   let displayAmount = 0;
   let checkIsIncome = true;
   if (type == 'Income') {
@@ -52,8 +50,6 @@ export default function Card({ type }) {
     });
     displayAmount = data.reduce((acc, data) => (acc += data.amount), 0);
   }
-
-  console.log(displayAmount);
 
   function handleClick() {
     setFormtype(type);

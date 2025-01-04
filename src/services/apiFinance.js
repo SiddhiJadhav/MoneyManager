@@ -2,7 +2,6 @@ import supabase from './supabase';
 
 export async function getfinance() {
   const { data: session } = await supabase.auth.getSession();
-  console.log(session);
   if (!session?.session?.user) return null;
 
   const { data, error } = await supabase
@@ -14,7 +13,6 @@ export async function getfinance() {
     throw new Error('Data not found');
   }
 
-  console.log(data);
   return data;
 }
 

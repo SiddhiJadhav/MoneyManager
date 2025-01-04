@@ -7,7 +7,6 @@ import supabase from '../services/supabase';
 import FormLayout from './FormLayout';
 import Input from './Input';
 import Button from './Button';
-import { useDeleteFinanceData } from '../features/financeData/useDeleteFinance';
 
 export default function Form() {
   const { formType, isEditForm, editFormData, setShowForm } =
@@ -75,6 +74,13 @@ export default function Form() {
 
   function onError(errors) {
     // console.log(errors);
+  }
+
+  let btnText = '';
+  if (isEditForm) {
+    btnText = formType === 'Income' ? 'Update Income' : 'Update Expense';
+  } else {
+    btnText = formType === 'Income' ? 'Add Income' : 'Add Expense';
   }
 
   function handleCloseModal(e) {
@@ -154,10 +160,7 @@ export default function Form() {
             errors={errors.description}
             register={register}
           />
-          <Button
-            text={formType === 'Income' ? 'Add Income' : 'Add Expense'}
-            isLoading={isAdding}
-          />
+          <Button text={btnText} isLoading={isAdding} />
         </FormLayout>
         {/* </form> */}
       </div>
