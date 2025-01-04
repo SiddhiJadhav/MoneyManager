@@ -9,7 +9,6 @@ export async function getfinance() {
     .from('financeData')
     .select('*')
     .eq('user', session?.session?.user?.id);
-
   if (error) {
     console.error(error);
     throw new Error('Data not found');
@@ -44,6 +43,7 @@ export async function editFinance(editEntry) {
     console.error(error);
     throw new Error('Data not found');
   }
+  return data;
 }
 export async function deleteFinance(id) {
   const { error } = await supabase.from('financeData').delete().eq('id', id);

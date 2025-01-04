@@ -33,7 +33,6 @@ export default function Form() {
   const { errors } = formState;
 
   function onSubmit(data) {
-    debugger;
     if (isEditForm) {
       editFianance(
         {
@@ -84,7 +83,7 @@ export default function Form() {
 
   return (
     <div
-      className="z-50 bg-slate-500/50 tran w-full h-full max-h-full absolute"
+      className="z-50 bg-slate-500/50 tran fixed w-full h-full top-0 left-0"
       id="modal"
       onClick={e => handleCloseModal(e)}
     >

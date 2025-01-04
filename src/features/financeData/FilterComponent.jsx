@@ -1,10 +1,4 @@
 import DatePicker from 'react-datepicker';
-import Button from '../../ui/Button';
-import Input from '../../ui/Input';
-import FormLayout from '../../ui/FormLayout';
-import { Controller, useForm } from 'react-hook-form';
-import { MdOutlineClear } from 'react-icons/md';
-import { FaSearch } from 'react-icons/fa';
 import { ImCross } from 'react-icons/im';
 
 export default function FilterComponent({
@@ -16,9 +10,9 @@ export default function FilterComponent({
   setisStateChnaged,
   searchByDesc,
   setSearchByDesc,
+  setshowYear,
 }) {
-  function handleSearchClick(e) {
-    debugger;
+  function handleSearchClick() {
     if (isApplied) {
       setSearchByDesc('');
       setIsApplied(false);
@@ -43,6 +37,7 @@ export default function FilterComponent({
         dateFormat="MM/yyyy"
         onChange={newDate => {
           setFilterMonth(newDate);
+          setshowYear(new Date(newDate).getFullYear());
         }}
         className="border py-2 px-3 text-grey-darkest rounded-lg font-semibold w-24"
       />

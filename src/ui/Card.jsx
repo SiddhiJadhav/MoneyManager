@@ -5,10 +5,16 @@ import Button from './Button';
 import AmountDiv from './AmountDiv';
 
 export default function Card({ type }) {
-  const { finance, isLoading, setShowForm, setFormtype } =
-    useContext(FinanceContext);
+  const {
+    finance,
+    isLoading,
+    setShowForm,
+    setFormtype,
+    setShowStat,
+    showYear,
+  } = useContext(FinanceContext);
   console.log(finance);
-
+  debugger;
   let displayAmount = 0;
   let checkIsIncome = true;
   if (type == 'Income') {
@@ -18,18 +24,33 @@ export default function Card({ type }) {
   }
   if (type == 'Total') {
     var totalIncome = finance
-      ?.filter(entry => entry.isIncome == true)
+      ?.filter(entry => {
+        return (
+          new Date(entry.created_at).getFullYear() == showYear &&
+          entry.isIncome == true
+        );
+      })
       .reduce((acc, data) => (acc += data.amount), 0);
 
     var totalExpences = finance
-      ?.filter(entry => entry.isIncome == false)
+      ?.filter(entry => {
+        return (
+          new Date(entry.created_at).getFullYear() == showYear &&
+          entry.isIncome == false
+        );
+      })
       .reduce((acc, data) => (acc += data.amount), 0);
 
     displayAmount = totalIncome - totalExpences;
   } else {
-    displayAmount = finance
-      ?.filter(entry => entry.isIncome == checkIsIncome)
-      .reduce((acc, data) => (acc += data.amount), 0);
+    // displayAmount = finance
+    let data = finance?.filter(entry => {
+      return (
+        new Date(entry.created_at).getFullYear() == showYear &&
+        entry.isIncome == checkIsIncome
+      );
+    });
+    displayAmount = data.reduce((acc, data) => (acc += data.amount), 0);
   }
 
   console.log(displayAmount);
@@ -37,6 +58,10 @@ export default function Card({ type }) {
   function handleClick() {
     setFormtype(type);
     setShowForm(true);
+  }
+
+  function handleClickShowStats() {
+    setShowStat(true);
   }
 
   return (
@@ -52,8 +77,10 @@ export default function Card({ type }) {
           displayAmount={displayAmount}
           checkIsIncome={checkIsIncome}
         />
-        {type != 'Total' && (
+        {type != 'Total' ? (
           <Button text={`Add ${type}`} onClick={() => handleClick()} />
+        ) : (
+          <Button text={`Show Stats`} onClick={() => handleClickShowStats()} />
         )}
       </div>
     </>

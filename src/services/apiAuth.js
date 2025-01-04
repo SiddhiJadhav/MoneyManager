@@ -34,6 +34,7 @@ export async function getCurrentUser() {
 
   const { data, error } = await supabase.auth.getUser();
   console.log(data.user);
+
   if (error) throw new Error(error.message);
   return data?.user;
 }
@@ -72,4 +73,14 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
 
   if (error2) throw new Error(error2.message);
   return updatedUser;
+}
+
+export async function getUserName(id) {
+  let { data: profiles, error } = await supabase
+    .from('profiles')
+    .select('username')
+    .eq('id', id)
+    .single();
+
+  return profiles?.username;
 }

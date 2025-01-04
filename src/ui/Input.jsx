@@ -9,7 +9,6 @@ export default function Input({
   register,
   label,
   type,
-  classes,
   options,
 }) {
   return (
@@ -18,7 +17,7 @@ export default function Input({
         <label htmlFor={id} className="text-lg font-semibold text-slate-700">
           {label}
         </label>
-        {type == 'text' && (
+        {type != 'select' && (
           <input
             type={type}
             id={id}
@@ -28,7 +27,7 @@ export default function Input({
             {...register(id, {
               required: 'This field is required',
             })}
-            className="border py-2 px-3 text-grey-darkest rounded-lg"
+            className="border py-2 px-3 text-grey-darkest rounded-lg font-semibold"
           />
         )}
         {type == 'select' && (
@@ -38,7 +37,7 @@ export default function Input({
             {...register(id, {
               required: 'This field is required',
             })}
-            className="border py-2 px-3 text-grey-darkest rounded-lg"
+            className="border py-2 px-3 text-grey-darkest rounded-lg font-semibold"
           >
             {options.map(function (opt) {
               return (
