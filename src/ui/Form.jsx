@@ -95,7 +95,7 @@ export default function Form() {
     >
       <div className="bg-slate-200 w-1/3 py-10  gap-5 flex flex-col items-center m-auto my-16 rounded-xl">
         <div className="text-4xl font-bold text-slate-700">
-          {formType == 'Income' ? 'INCOME' : 'EXPENCE'}
+          {formType == 'Income' ? 'INCOME' : 'EXPENSE'}
         </div>
         <FormLayout
           onSubmit={handleSubmit(onSubmit, onError)}
